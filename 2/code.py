@@ -40,8 +40,8 @@ def check_passwords2():
   number_of_good_passwords = 0
   counter = 0
   numbers_list = []
-  lower_bound_list = []
-  upper_bound_list = []
+  first_index_list = []
+  second_index_list = []
   char_list = []
   password_list = []
 
@@ -53,19 +53,22 @@ def check_passwords2():
     password_list.append(split[2])
 
   for number in numbers_list:
-    lower_bound_list.append(int(number.partition("-")[0]))
-    upper_bound_list.append(int(number.partition("-")[2]))
+    first_index_list.append(int(number.partition("-")[0]) - 1)
+    second_index_list.append(int(number.partition("-")[2]) - 1)
 
   for password in password_list:
-    occurrences = 0
-    for letter in password:
-      if letter == char_list[counter]:
-        occurrences += 1
-    if upper_bound_list[counter] >= occurrences >= lower_bound_list[counter]:
+    is_correct = False
+    if password[first_index_list[counter]] == char_list[counter] or password[second_index_list[counter]] == char_list[counter]:
+      is_correct = True
+    if password[first_index_list[counter]] == char_list[counter] and password[second_index_list[counter]] == char_list[counter]:
+      is_correct = False
+
+    if is_correct:
       number_of_good_passwords += 1
     counter += 1
 
   print(number_of_good_passwords)
 
 
+check_passwords()
 check_passwords2()
